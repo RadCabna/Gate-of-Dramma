@@ -1,21 +1,16 @@
-//
-//  ContentView.swift
-//  Gate of Drama
-//
-//  Created by Алкександр Степанов on 01.04.2026.
-//
-
 import SwiftUI
 
 struct ContentView: View {
+    @AppStorage("onboardingCompleted") private var onboardingCompleted = false
+
     var body: some View {
-        VStack {
-            Image(systemName: "globe")
-                .imageScale(.large)
-                .foregroundStyle(.tint)
-            Text("Hello, world!")
+        if onboardingCompleted {
+            MainView()
+        } else {
+            OnboardingView {
+                onboardingCompleted = true
+            }
         }
-        .padding()
     }
 }
 
