@@ -1,11 +1,12 @@
 import SwiftUI
 
 enum AppTab {
-    case series, relationships, stats
+    case series, relationships, stats, profile
 }
 
 struct MainView: View {
     @StateObject private var store = SeriesStore()
+    @StateObject private var profileStore = UserProfileStore()
     @State private var selectedTab: AppTab = .series
 
     private let gradient = LinearGradient(
@@ -28,12 +29,15 @@ struct MainView: View {
                 RelationshipsView()
             case .stats:
                 StatsView()
+            case .profile:
+                ProfileView()
             }
 
             CustomTabBar(selectedTab: $selectedTab)
         }
         .ignoresSafeArea(edges: .bottom)
         .environmentObject(store)
+        .environmentObject(profileStore)
     }
 }
 
@@ -43,7 +47,8 @@ struct CustomTabBar: View {
     private let tabs: [(tab: AppTab, icon: String, label: String)] = [
         (.series, "series", "Series"),
         (.relationships, "relationships", "Relationships"),
-        (.stats, "stats", "Stats")
+        (.stats, "stats", "Stats"),
+        (.profile, "profile", "Profile")
     ]
 
     var body: some View {
